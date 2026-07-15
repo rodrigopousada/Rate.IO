@@ -1,0 +1,19 @@
+# Java / Spring
+api/target/
+api/.gradle/
+api/.settings/
+api/.classpath
+api/.project
+api/.idea/
+*.log
+
+# Node / Front
+node_modules/
+dist/
+build/
+.expo/
+.env
+
+# Geral
+.DS_Store
+Thumbs.db
