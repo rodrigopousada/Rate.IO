@@ -6,6 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/eventos")
 public class EventoController {
@@ -20,5 +23,11 @@ public class EventoController {
     public ResponseEntity<Evento> criar(@RequestBody Evento evento) {
         Evento novoEvento = service.criar(evento);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoEvento);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Evento>> listar() {
+        List<Evento> lista = service.listarTodos();
+        return ResponseEntity.ok(lista);
     }
 }

@@ -3,6 +3,7 @@ package com.rateio.roleapi.service;
 import com.rateio.roleapi.model.Evento;
 import com.rateio.roleapi.repository.EventoRepository;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class EventoService {
@@ -16,5 +17,8 @@ public class EventoService {
     public Evento criar(Evento evento) {
         evento.setAtivo(true);
         return repository.save(evento);
+    }
+    public List<Evento> listarTodos(){
+        return repository.findAll();
     }
 }
