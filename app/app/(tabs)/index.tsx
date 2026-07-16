@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native';
-
+import { useRouter } from 'expo-router';
 
 interface Grupo {
   id: number;
@@ -17,15 +17,16 @@ interface Evento {
 }
 
 export default function App() {
-  const [eventos, setEventos] = useState<Evento[]>([]);
-  const [carregando, setCarregando] = useState(true);
+    const router = useRouter();
+    const [eventos, setEventos] = useState<Evento[]>([]);
+    const [carregando, setCarregando] = useState(true);
 
-  // 2. Novo estado pra controlar a "rodinha" do puxar pra atualizar
+  //estado pra controlar a "rodinha" do puxar pra atualizar
   const [atualizando, setAtualizando] = useState(false);
 
-  // 3. Transformamos o fetch numa função reutilizável pra podermos chamar ela em dois lugares diferentes
+  // Transforma o fetch numa função reutilizável pra podermos chamar ela em dois lugares diferentes
   const buscarEventos = () => {
-    fetch('http://10.0.0.142:8080/eventos') // O seu IP certinho
+    fetch('http://10.0.0.154:8080/eventos') // O seu IP certinho
         .then(resposta => resposta.json())
         .then(dados => {
           setEventos(dados);
@@ -44,13 +45,14 @@ export default function App() {
     buscarEventos();
   }, []);
 
-  // 4. A função que dispara quando você passa o dedo pra baixo
+  //A função que dispara quando você passa o dedo pra baixo
   const aoPuxarPraBaixo = () => {
     setAtualizando(true); // Mostra a rodinha girando
     buscarEventos();      // Bate no Java de novo pedindo os dados atualizados
   };
 
-  return (
+  // @ts-ignore
+    return (
       <View style={styles.container}>
 
         <View style={styles.header}>
@@ -116,15 +118,14 @@ export default function App() {
 
         </ScrollView>
 
-        <View style={styles.footer}>
-          <TouchableOpacity style={styles.buttonOutline}>
-            <Text style={styles.buttonOutlineText}>entrar em um grupo</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.buttonSolid}>
-            <Text style={styles.buttonSolidText}>criar grupo</Text>
-          </TouchableOpacity>
-        </View>
+          <View style={styles.footer}>
+              <TouchableOpacity
+                  style={styles.buttonSolidLarge}
+                  onPress={() => router.push('/login' as any)} //clubes
+              >
+                  <Text style={styles.buttonSolidText}>Meus Clubes</Text>
+              </TouchableOpacity>
+          </View>
 
       </View>
   );
@@ -148,8 +149,6 @@ const styles = StyleSheet.create({
   progressBarBackground: { height: 10, backgroundColor: '#E5E7EB', borderRadius: 10, overflow: 'hidden' },
   progressBarFill: { height: '100%', backgroundColor: '#3B82F6', borderRadius: 10 },
   footer: { flexDirection: 'row', justifyContent: 'space-between', padding: 20, backgroundColor: '#FFFFFF', borderTopWidth: 1, borderColor: '#E5E7EB' },
-  buttonOutline: { flex: 1, borderWidth: 2, borderColor: '#111827', paddingVertical: 15, borderRadius: 12, alignItems: 'center', marginRight: 10 },
-  buttonOutlineText: { color: '#111827', fontWeight: 'bold', fontSize: 14 },
-  buttonSolid: { flex: 1, backgroundColor: '#111827', paddingVertical: 15, borderRadius: 12, alignItems: 'center', marginLeft: 10 },
-  buttonSolidText: { color: '#FFFFFF', fontWeight: 'bold', fontSize: 14 }
+  buttonSolidLarge: {width: '100%', backgroundColor: '#111827',paddingVertical: 16,borderRadius: 12,alignItems: 'center',},
+  buttonSolidText: {color: '#FFFFFF',fontWeight: 'bold',fontSize: 16,}
 });
