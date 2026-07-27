@@ -27,10 +27,6 @@ public class Evento {
     @Column(nullable = false)
     private Boolean ativo = true;
 
-    private Double meta;
-
-    private Double arrecadado;
-
     @ManyToOne
     @JoinColumn(name = "grupo_id", nullable = false)
     private Grupo grupo;

@@ -1,7 +1,10 @@
 package com.rateio.roleapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "usuarios")
@@ -18,8 +21,13 @@ public class Usuario {
 
         @Column(nullable = false, unique = true)
         private String email;
-
+        @JsonIgnore
         @Column(nullable = false)
         private String senha;
+
+        @JsonIgnore
+        @ManyToMany(mappedBy = "membros")
+        private List<Grupo> grupos;
+
     }
 

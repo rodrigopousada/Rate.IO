@@ -17,6 +17,16 @@ public class Grupo {
     @Column(nullable = false)
     private String nome;
 
+    @Column(name = "convite_codigo", unique = true)
+    private String conviteCodigo;
+
+    @Column(name = "entrada_com_aprovacao", nullable = false)
+    private Boolean entradaComAprovacao = true;
+
+    @ManyToOne
+    @JoinColumn(name = "administrador_id")
+    private Usuario administrador;
+
     @ManyToMany
     @JoinTable(
             name = "grupo_usuario",
